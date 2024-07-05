@@ -1,7 +1,7 @@
-name: CronJob
+name: CronJob - Prize Claimer Bot - Optimism
 on:
   schedule:
-    - cron: "*/5 * * * *" # ie. 4:00pm, 4:05pm, 4:10pm ... etc.
+    - cron: "*/5 * * * *" # ie. 4:05pm, 4:10pm, 4:15pm ... etc.
   push:
 env:
   CHAIN_ID: 10
@@ -10,6 +10,8 @@ env:
   JSON_RPC_URL: ${{ secrets.OPTIMISM_MAINNET_JSON_RPC_URL }}
   COVALENT_API_KEY: ${{ secrets.COVALENT_API_KEY }}
   CUSTOM_RELAYER_PRIVATE_KEY: ${{ secrets.CUSTOM_RELAYER_PRIVATE_KEY }}
+  CONTRACT_JSON_URL: 'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-mainnet/396f04daedc5a38935460ddf47d2f10e9ac1fec6/deployments/optimism/contracts.json'
+  SUBGRAPH_URL: 'https://api.studio.thegraph.com/query/63100/pt-v5-optimism/version/latest?source=pooltogether'
   NODE_OPTIONS: "--max_old_space_size=32768"
 permissions: write-all
 jobs:
@@ -23,12 +25,12 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       
       - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
